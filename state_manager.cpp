@@ -11,7 +11,7 @@ void StateManager::TestRun() {
     wheels_control_->GoStraight(power);
   } 
   else if(loopCount >= 300 && loopCount < 600){
-    //wheels_control_->GoBackStraight(power);
+    wheels_control_->GoBackStraight(power);
   }
   else if(loopCount >= 600 && loopCount < 900){
     wheels_control_->TurnLeft();
