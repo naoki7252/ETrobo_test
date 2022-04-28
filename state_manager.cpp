@@ -1,10 +1,16 @@
 #include "state_manager.h"
 
 
-StateManager::StateManager(WheelsControl* wheels_control) : wheels_control_(wheels_control) {
+StateManager::StateManager(WheelsControl* wheels_control, Luminous* luminous) : wheels_control_(wheels_control), luminous_(luminous) {
 }
 
 void StateManager::TestRun() {
+  Rgb val = luminous_->rgb_;
+
+  sprintf(str, "R: %d, G: %d, B: %d\n ", val.r, val.g, val.b);
+  syslog(LOG_NOTICE, str);
+
+  /*
   int8_t power = 50;
   loopCount += 1;
   if (loopCount < 300) {
@@ -18,6 +24,6 @@ void StateManager::TestRun() {
   }
   else {
     wheels_control_->Stop();
-  }
+  }*/
 }
 
