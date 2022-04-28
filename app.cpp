@@ -69,7 +69,7 @@ void main_task(intptr_t unused) {
 }
 
 void exec_action_task(intptr_t unused) {
-  state_manager->TestRun();
+  state_manager->TimeAttack();
   ext_tsk();
 }
 
