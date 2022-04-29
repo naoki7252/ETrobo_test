@@ -13,7 +13,7 @@ void WheelsControl::Exec(int8_t target_power_l, int8_t target_power_r) {
 }
 
 void WheelsControl::LineTrace(Hsv curr_hsv) {
-  int8_t base_power = 48;
+  int8_t base_power = 50;
   float target_v = 40;
 
   static float diff[2];
