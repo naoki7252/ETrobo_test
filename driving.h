@@ -20,4 +20,4 @@ class WheelsControl {
   MotorIo* motor_io_;
 };
 
-#endif  // ETRC22_DRIVING_H_
+#endif  // ETRC21_DRIVING_H_
