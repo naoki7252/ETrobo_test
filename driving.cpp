@@ -2,6 +2,9 @@
 
 #include <math.h>
 
+#define DELTA_T 0.004
+float integral;
+
 WheelsControl::WheelsControl(MotorIo* motor_io) : motor_io_(motor_io) {
 }
 
@@ -10,15 +13,31 @@ void WheelsControl::Exec(int8_t target_power_l, int8_t target_power_r) {
 }
 
 void WheelsControl::LineTrace(Hsv curr_hsv) {
-  int8_t base_power = 48;
+  int8_t base_power = 50;
   float target_v = 40;
 
+  static float diff[2];
+  float p, i, d;
+  float kp = 0.36, KI = 1.2, KD = 0.027;
+  
+  diff[0] = diff[1];
+  diff[1] = curr_hsv.v - target_v;
+  integral += (diff[1] + diff[0]) / 2.0 * DELTA_T;
+
+  p = kp * diff[1];
+  i = KI * integral;
+  d = KD * (diff[1] - diff[0]) / DELTA_T;
+
+  int8_t right_power = static_cast<int8_t>(base_power + p + i + d);
+  int8_t left_power = static_cast<int8_t>(base_power - p - i - d);
+
   //float mv = calcMv(curr_hsv.v);
-  float kp = 0.45;
+  /*float kp = 0.45;
   float mv = (target_v - curr_hsv.v) * kp;
 
   int8_t right_power = static_cast<int8_t>(base_power + mv);
   int8_t left_power = static_cast<int8_t>(base_power - mv);
+  */
 
   motor_io_->SetWheelsPower(right_power, left_power);
 
