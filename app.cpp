@@ -51,7 +51,7 @@ void main_task(intptr_t unused) {
     if (sensor_io->touch_sensor_pressed_) break;
     tslp_tsk(10*1000U);
   }
-  tslp_tsk(3000*1000U);
+  tslp_tsk(1000*1000U);
 
   sta_cyc(EXEC_ACTION_CYC);
 

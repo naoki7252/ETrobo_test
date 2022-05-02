@@ -1,6 +1,7 @@
 #include "driving.h"
 
 #include <math.h>
+#include <time.h>
 
 #define DELTA_T 0.004
 float integral;
@@ -13,7 +14,15 @@ void WheelsControl::Exec(int8_t target_power_l, int8_t target_power_r) {
 }
 
 void WheelsControl::LineTrace(Hsv curr_hsv) {
-  int8_t base_power = 50;
+  /*
+  clock_t now = clock();
+  char str[264];
+  sprintf(str, "time: %f\n", (static_cast<double>(now-before_time))/CLOCKS_PER_SEC);
+  syslog(LOG_NOTICE, str);
+  before_time = now;
+  */
+
+  /*int8_t base_power = 50;
   float target_v = 40;
 
   static float diff[2];
@@ -30,6 +39,16 @@ void WheelsControl::LineTrace(Hsv curr_hsv) {
 
   int8_t right_power = static_cast<int8_t>(base_power + p + i + d);
   int8_t left_power = static_cast<int8_t>(base_power - p - i - d);
+  */
+
+  int8_t base_power = 50;
+  float target_v = 40;
+
+  float kp = 0.45;
+  float mv = (curr_hsv.v - target_v) * kp;
+
+  int8_t right_power = static_cast<int8_t>(base_power - mv);
+  int8_t left_power = static_cast<int8_t>(base_power + mv);
 
   //float mv = calcMv(curr_hsv.v);
   /*float kp = 0.45;
@@ -39,14 +58,8 @@ void WheelsControl::LineTrace(Hsv curr_hsv) {
   int8_t left_power = static_cast<int8_t>(base_power - mv);
   */
 
-  motor_io_->SetWheelsPower(right_power, left_power);
+  //motor_io_->SetWheelsPower(right_power, left_power);
 
-  /*
-  char str[264];
-
-  sprintf(str, "H: %f, S: %f, V: %f\n ", curr_hsv.h, curr_hsv.s, curr_hsv.v);
-  syslog(LOG_NOTICE, str);
-  */
 }
 
 void WheelsControl::GoStraight(int8_t power) {

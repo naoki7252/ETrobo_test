@@ -5,6 +5,7 @@
 #include "etrc_info.h"
 #include "info_type.h"
 #include "utils.h"
+#include "time.h"
 
 class WheelsControl {
  public:
@@ -17,6 +18,7 @@ class WheelsControl {
   void Stop();
 
  private:
+  clock_t before_time = 0;
   MotorIo* motor_io_;
 };
 
