@@ -18,15 +18,15 @@ void WheelsControl::LineTrace(Hsv curr_hsv) {
 
   static float diff[2];
   float p, i, d;
-  float kp = 0.36, KI = 1.2, KD = 0.027;
+  float kp = 0.36, ki = 1.2, kd = 0.027;
   
   diff[0] = diff[1];
   diff[1] = curr_hsv.v - target_v;
   integral += (diff[1] + diff[0]) / 2.0 * DELTA_T;
 
   p = kp * diff[1];
-  i = KI * integral;
-  d = KD * (diff[1] - diff[0]) / DELTA_T;
+  i = ki * integral;
+  d = kd * (diff[1] - diff[0]) / DELTA_T;
 
   int8_t right_power = static_cast<int8_t>(base_power + p + i + d);
   int8_t left_power = static_cast<int8_t>(base_power - p - i - d);
