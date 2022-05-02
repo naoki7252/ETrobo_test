@@ -22,6 +22,10 @@ void WheelsControl::LineTrace(Hsv curr_hsv) {
   before_time = now;
   */
 
+  char str[264];
+  sprintf(str, "right: %d, left: %d\n", motor_io_->counts_r_, motor_io_->counts_l_);
+  syslog(LOG_NOTICE, str);
+
   /*int8_t base_power = 50;
   float target_v = 40;
 
@@ -58,7 +62,7 @@ void WheelsControl::LineTrace(Hsv curr_hsv) {
   int8_t left_power = static_cast<int8_t>(base_power - mv);
   */
 
-  //motor_io_->SetWheelsPower(right_power, left_power);
+  motor_io_->SetWheelsPower(right_power, left_power);
 
 }
 
