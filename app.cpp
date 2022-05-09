@@ -62,6 +62,8 @@ void main_task(intptr_t unused) {
     tslp_tsk(100*1000U);
   }
 
+  localize->SaveOdometri();
+
   stp_cyc(EXEC_ACTION_CYC);
   stp_cyc(UPDATE_INFO_CYC);
   finalize();
@@ -77,6 +79,8 @@ void update_info_task(intptr_t unused) {
   motor_io->Update();
   sensor_io->Update();
   luminous->Update();
+  //luminous->CheckCurrHsv();
+  localize->Update();
 
   ext_tsk();
 }
